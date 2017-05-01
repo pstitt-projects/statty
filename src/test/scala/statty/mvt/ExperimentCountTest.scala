@@ -1,7 +1,8 @@
-package com.rentalcars.analytics.stats
+package statty.mvt
 
 import grizzled.math.stats._
 import org.scalatest.{FlatSpec, Matchers}
+import statty.statcount.ComplexStatCount
 
 /**
   * Created by Paul on 01/05/2017.

@@ -1,10 +1,10 @@
-package com.rentalcars.analytics.stats
+package statty.statcount
 
 /**
   * Created by Paul Stitt on 01/05/2017.
   */
-case class Singularity(a: NonSingularComplexStatCount,
-                       b: NonSingularComplexStatCount)
+case class Singularity(a: CalculableComplexStatCount,
+                       b: CalculableComplexStatCount)
   extends ComplexStatCount {
 
   lazy val count: Int = 0

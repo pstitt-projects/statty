@@ -1,4 +1,6 @@
-package com.rentalcars.analytics.stats
+package statty.mvt
+
+import statty.statcount.ComplexStatCount
 
 /**
   * Created by Paul Stitt on 01/05/2017.

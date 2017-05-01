@@ -1,15 +1,13 @@
-package com.rentalcars.analytics.stats
+package statty.statcount
 
 /**
   * Created by Paul Stitt on 01/05/2017.
   */
-object NonSingularComplexStatCount {
+object CalculableComplexStatCount {
   val MATCH_TOLERANCE = 0.00000001
 }
 
-case class NonSingularComplexStatCount(count0: Int = 0,
-                                       mean0: BigDecimal = 0,
-                                       M20: BigDecimal = 0)
+case class CalculableComplexStatCount(count0: Int, mean0: BigDecimal, M20: BigDecimal)
   extends ComplexStatCount {
   override def count: Int = count0
 
@@ -34,7 +32,7 @@ case class NonSingularComplexStatCount(count0: Int = 0,
           (this + singularity.a) + singularity.b
         }
       }
-      case stat: NonSingularComplexStatCount =>
+      case stat: CalculableComplexStatCount =>
         ComplexStatAlgorithms.mergeUsingChan(this, stat)
     }
   }
@@ -56,7 +54,7 @@ case class NonSingularComplexStatCount(count0: Int = 0,
           (this - singularity.a) - singularity.b
         }
       }
-      case stat: NonSingularComplexStatCount =>
+      case stat: CalculableComplexStatCount =>
         ComplexStatAlgorithms.unmergeUsingChan(this, stat)
     }
   }
@@ -69,11 +67,11 @@ case class NonSingularComplexStatCount(count0: Int = 0,
     //    }, sVar=${bdToString(sampleVariance)}]"
   }
 
-  def canEqual(a: Any) = a.isInstanceOf[NonSingularComplexStatCount]
+  def canEqual(a: Any) = a.isInstanceOf[CalculableComplexStatCount]
 
   override def equals(that: Any): Boolean =
     that match {
-      case that: NonSingularComplexStatCount => {
+      case that: CalculableComplexStatCount => {
         that.canEqual(this) &&
           matches(n, that.n) &&
           matches(mean, that.mean) &&
@@ -84,7 +82,7 @@ case class NonSingularComplexStatCount(count0: Int = 0,
 
   private def matches(a: BigDecimal, b: BigDecimal) : Boolean = {
     var diff = if (a>b) a-b else b-a
-    diff < NonSingularComplexStatCount.MATCH_TOLERANCE
+    diff < CalculableComplexStatCount.MATCH_TOLERANCE
   }
 }
 

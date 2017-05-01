@@ -1,4 +1,4 @@
-package com.rentalcars.analytics.stats
+package statty.statcount
 
 import grizzled.math.stats._
 import org.scalatest.Matchers
@@ -96,6 +96,13 @@ class ComplexStatCountTest extends org.scalatest.FlatSpec with Matchers {
   it should "treat a count that is added and subtracted as a no-op" in {
     (c1 + c2) - c2 shouldBe c1
   }
+
+  behavior of "Subtraction of ComplexStatCounts"
+
+  it should "subtract counts of values leaving no trace" in {
+    ComplexStatCount.ofValues(1,5,9) - ComplexStatCount.ofValues(1,5) shouldBe ComplexStatCount.ofValues(9)
+  }
+
 }
 
 

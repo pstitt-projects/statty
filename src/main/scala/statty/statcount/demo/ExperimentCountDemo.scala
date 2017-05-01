@@ -1,6 +1,7 @@
-package com.rentalcars.analytics.stats.demo
+package statty.statcount.demo
 
-import com.rentalcars.analytics.stats.{ComplexStatCount, ExperimentCount}
+import statty.mvt.ExperimentCount
+import statty.statcount.ComplexStatCount
 
 /**
   * Created by Paul Stitt on 01/05/2017.

@@ -1,4 +1,4 @@
-package com.rentalcars.analytics.stats
+package statty.statcount
 
 import ComplexStatImplicits._
 
@@ -12,14 +12,14 @@ object ComplexStatImplicits {
 }
 
 object ComplexStatCount {
-  def apply(n: Int = 0,
-            mean: BigDecimal = 0,
-            M2: BigDecimal = 0): ComplexStatCount = {
-    new NonSingularComplexStatCount(n, mean, M2)
+  def apply(n: Int,
+            mean: BigDecimal,
+            M2: BigDecimal): ComplexStatCount = {
+    new CalculableComplexStatCount(n, mean, M2)
   }
 
   def ofValues(valuesToAdd: BigDecimal*): ComplexStatCount = {
-    var stat = ComplexStatCount()
+    var stat = ComplexStatCount(0, 0, 0)
     valuesToAdd.foreach(value => {
       stat = stat + value
     })
@@ -27,7 +27,7 @@ object ComplexStatCount {
   }
 
   def ofAntiValues(valuesToAdd: BigDecimal*): ComplexStatCount = {
-    var stat = ComplexStatCount()
+    var stat = ComplexStatCount(0, 0, 0)
     valuesToAdd.foreach(value => {
       stat = stat - value
     })

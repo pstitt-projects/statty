@@ -1,11 +1,11 @@
-package com.rentalcars.analytics.stats
+package statty.statcount
 
 /**
   * Created by Paul Stitt on 01/05/2017.
   */
 object ComplexStatAlgorithms {
-  def mergeUsingChan(a: NonSingularComplexStatCount,
-                     b: NonSingularComplexStatCount): ComplexStatCount = {
+  def mergeUsingChan(a: CalculableComplexStatCount,
+                     b: CalculableComplexStatCount): ComplexStatCount = {
     val n = a.n + b.n
     if (n == 0) {
       //      println(s"merge counter ${a} with ${b} = Zero")
@@ -19,20 +19,20 @@ object ComplexStatAlgorithms {
     }
   }
 
-  def unmergeUsingChan(a: NonSingularComplexStatCount,
-                       b: NonSingularComplexStatCount): ComplexStatCount = {
-    mergeUsingChan(a, NonSingularComplexStatCount(b.n * (-1), b.mean, b.M2))
+  def unmergeUsingChan(a: CalculableComplexStatCount,
+                       b: CalculableComplexStatCount): ComplexStatCount = {
+    mergeUsingChan(a, CalculableComplexStatCount(b.n * (-1), b.mean, -1*b.M2))
   }
 
-  def mergeUsingWelford(a: NonSingularComplexStatCount,
+  def mergeUsingWelford(a: CalculableComplexStatCount,
                         value: BigDecimal): ComplexStatCount = {
     val n = a.n + 1
 
     if (n == 0) {
       //      println(s"merge value ${value} with ${a} = Zero")
       Singularity(
-        a.asInstanceOf[NonSingularComplexStatCount],
-        ComplexStatCount.ofValues(value).asInstanceOf[NonSingularComplexStatCount])
+        a.asInstanceOf[CalculableComplexStatCount],
+        ComplexStatCount.ofValues(value).asInstanceOf[CalculableComplexStatCount])
     } else {
       val d = value - a.mean
       val mean = a.mean + (d / n)
@@ -43,7 +43,7 @@ object ComplexStatAlgorithms {
     }
   }
 
-  def unmergeUsingWelford(a: NonSingularComplexStatCount,
+  def unmergeUsingWelford(a: CalculableComplexStatCount,
                           value: BigDecimal): ComplexStatCount = {
     val n = a.n - 1
 
@@ -51,7 +51,7 @@ object ComplexStatAlgorithms {
       //      println(s"unmerge value ${value} from ${a} = Zero")
       new Singularity(
         a,
-        (ComplexStatCount() - value).asInstanceOf[NonSingularComplexStatCount])
+        (ComplexStatCount(0, 0, 0) - value).asInstanceOf[CalculableComplexStatCount])
     } else {
       val d = value - a.mean
       val mean = a.mean - (d / n)
